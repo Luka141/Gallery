@@ -35,7 +35,9 @@ class ImageResource extends Resource
                 FileUpload::make('file_path')
                     ->label('Image')
                     ->image()
-                    ->directory('images')                 
+                    ->directory('images')    
+                    ->disk('public')  
+                    ->visibility('public')          
                     ->required(),
             ]);
     }
@@ -83,8 +85,7 @@ class ImageResource extends Resource
                 ->url(function (Image $poto) {
                     return $poto->fullImgFileUrl();                  
                 })
-                ->openUrlInNewTab(),
-                
+                ->openUrlInNewTab(),  
                 
             ])
             ->bulkActions([

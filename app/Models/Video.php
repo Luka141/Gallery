@@ -17,16 +17,12 @@ class Video extends Model
     public function getVideoFullUrl()
     {
         return asset('storage/' . $this->file_path);
-        // return Storage::url($this->file_path);
+       
     }
 
     public function getThumbnailFullUrl()
     {
-        // if ($this->thumbnail_path) {
-        //     return Storage::url($this->thumbnail_path);
-        // } else {
-        //     return null;
-        // }
+       
         return asset('storage/' . $this->thumbnail_path);
     }
 }
