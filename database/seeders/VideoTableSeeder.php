@@ -13,14 +13,14 @@ class VideoTableSeeder extends Seeder
      */
     public function run(): void
     {
-        video::truncate();
+        Video::truncate();
 
         $videos = [
         [
             'title' => 'Laravel Tutorial',
-                'description' => 'Laravel description',
-                'file_path' => 'videos/laravel_intro.mp4',
-                'thumbnail_path' => 'thumbnails/laravel_thumb.jpg',
+            'description' => 'Laravel description',
+            'file_path' => 'videos/laravel_intro.mp4',
+            'thumbnail_path' => 'thumbnails/laravel_thumb.jpg',
         ],
 
         [

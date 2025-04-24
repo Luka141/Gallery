@@ -31,6 +31,7 @@ class ImagesTableSeeder  extends Seeder
                 'description' => 'Third photo description',
                 'file_path' => 'images/default3.jpg',
             ],
+            
         ];
         
        
