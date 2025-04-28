@@ -2,12 +2,9 @@
 
 use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\VideoController;
+//use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\Api\GalleryController;
 use Illuminate\Support\Facades\Route;
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 
  
     Route::get('/images', [ImageController::class, 'index']);
@@ -18,3 +15,4 @@ use Illuminate\Support\Facades\Route;
     Route::get('/videos/{id}', [VideoController::class, 'show']);
 
     
+    Route::get('/', [GalleryController::class, 'index']);
