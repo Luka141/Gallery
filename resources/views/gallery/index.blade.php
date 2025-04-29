@@ -11,42 +11,11 @@
     </div>
     
     <div class="gallery-grid">
-        @foreach($images as $image)
-            <div class="gallery-item" data-type="image">
-                <a href="{{ $image->fullImgFileUrl() }}" data-lightbox="gallery" data-title="{{ $image->title }}">
-                    <img src="{{ $image->fullImgFileUrl() }}" alt="{{ $image->title }}">
-                </a>
-                <div class="item-caption">
-                    <h5>{{ $image->title }}</h5>
-                    @if($image->description)
-                        <p class="item-description">{{ $image->description }}</p>
-                    @endif
-                </div>
-            </div>
-        @endforeach
        
-        @foreach($videos as $video)
-            <div class="gallery-item" data-type="video">
-                <div class="video-container">
-                    <video controls poster="{{ $video->getThumbnailFullUrl() }}">
-                        <source src="{{ $video->getVideoFullUrl() }}" type="video/mp4">
-                        loading
-                    </video>
-                </div>
-                <div class="item-caption">
-                    <h5>{{ $video->title }}</h5>
-                    @if($video->description)
-                        <p class="item-description">{{ $video->description }}</p>
-                    @endif
-                </div>
-            </div>
-        @endforeach
+        @include('gallery.images')
         
-        @if($images->isEmpty() && $videos->isEmpty())
-            <div class="col-12 text-center">
-                <p>Empty</p>
-            </div>
-        @endif
+        @include('gallery.videos')
+        
     </div>
 </div>
 @endsection
