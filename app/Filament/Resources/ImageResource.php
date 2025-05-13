@@ -5,17 +5,21 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ImageResource\Pages;
 use App\Models\Image;
 use Filament\Forms;
+use Filament\Forms\Components\Builder\Block;
 use Filament\Forms\Form;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Builder;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
-
+use Filament\Tables\Columns\IconColumn;
 
 class ImageResource extends Resource
 {
@@ -39,6 +43,34 @@ class ImageResource extends Resource
                     ->disk('public')  
                     ->visibility('public')          
                     ->required(),
+                
+                Builder::make('content')
+                    ->label('More Information')
+                    ->blocks([
+                        Block::make('heading')
+                            ->label('Title')
+                            ->schema([
+                                TextInput::make('content')
+                                    ->label('Title')
+                                    ->required(),
+                            ]),
+                        Block::make('paragraph')
+                            ->schema([
+                                RichEditor::make('content')
+                                    ->label('text')
+                                    ->required(),
+                            ]),
+                          Block::make('image_info')
+                            ->label('Image Information')
+                            ->schema([
+                                TextInput::make('artist')
+                                    ->label('artist'),
+                                TextInput::make('year'),
+                                TextInput::make('technique'),
+                                TextInput::make('size'),
+                            ]),
+                    ])
+                    ->collapsible(),
             ]);
     }
 
@@ -63,16 +95,21 @@ class ImageResource extends Resource
                     ->sortable(),
 
                 TextColumn::make('description')
-                ->limit(20)
-                ->tooltip(function ($record) {
-                    return $record->description;
-                })
+                    ->limit(20)
+                    ->tooltip(function ($record) {
+                        return $record->description;
+                    })
                     ->sortable(),
 
                 TextColumn::make('created_at')
                     ->label('Time')
                     ->dateTime('y-m-d h:i')
                     ->sortable(),
+                
+                IconColumn::make('content')
+                    ->label('More information')
+                    ->boolean()
+                    ->getStateUsing(fn ($record): bool => !empty($record->content)),
             ])
 
             ->recordUrl(false)
@@ -81,12 +118,11 @@ class ImageResource extends Resource
                 Tables\Actions\EditAction::make(),
                 DeleteAction::make(),
                 Tables\Actions\Action::make('view')
-                ->label('view')
-                ->url(function (Image $poto) {
-                    return $poto->fullImgFileUrl();                  
-                })
-                ->openUrlInNewTab(),  
-                
+                    ->label('view')
+                    ->url(function (Image $poto) {
+                        return $poto->fullImgFileUrl();                  
+                    })
+                    ->openUrlInNewTab(),  
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

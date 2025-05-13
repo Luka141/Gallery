@@ -1,6 +1,6 @@
 @foreach($images as $image)
     <div class="gallery-item" data-type="image">
-        <a href="{{ $image->fullImgFileUrl() }}" data-lightbox="gallery" data-title="{{ $image->title }}">
+        <a href="{{ route('gallery.show', $image->id) }}">
             <img src="{{ $image->fullImgFileUrl() }}" alt="{{ $image->title }}">
         </a>
         <div class="item-caption">

@@ -14,10 +14,18 @@ class Image extends Model
         'title',
         'description',
         'file_path',
+        'content',
     ];
 
+    protected $casts = [
+        'content' => 'array',
+    ];
+
+   
     public function fullImgFileUrl() 
     {
         return asset('storage/' . $this->file_path);
     }
+
+    
 }

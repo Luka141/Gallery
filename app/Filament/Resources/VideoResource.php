@@ -5,9 +5,13 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\VideoResource\Pages;
 use App\Filament\Resources\VideoResource\RelationManagers;
 use App\Models\Video;
+use Doctrine\DBAL\Schema\Schema;
 use Filament\Actions\Action;
 use Filament\Forms;
+use Filament\Forms\Components\Builder\Block;
+use Filament\Forms\Components\Builder;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -16,7 +20,6 @@ use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Actions\DeleteAction;
 
@@ -44,6 +47,32 @@ class VideoResource extends Resource
                 FileUpload::make('thumbnail_path')
                 ->label('Thumbnail')
                 ->image(),
+
+                Builder::make('content')
+                ->label('More Information')
+                ->blocks([
+                    Block::make('heading')
+                    ->label('Title')
+                    ->Schema([
+                        TextInput::make('content')
+                        ->label('Title')
+                        ->required(),
+                    ]),
+                    Block::make('paragraph')
+                    ->schema([
+                        RichEditor::make('content')
+                        ->label('text')
+                    ]),
+                    Block::make('image_info')
+                    ->label('Video Information')
+                    ->schema([
+                        TextInput::make('artist')
+                        ->label('artist'),
+                    TextInput::make('year'),
+                    TextInput::make('technique'),
+                    TextInput::make('size'),
+                    ])
+                ])
             ]);
     }
 
@@ -76,11 +105,11 @@ class VideoResource extends Resource
                 ->label('Created')
                 ->dateTime('y-m-d')
                 ->sortable(),
+
+                
                 
             ])
-            // ->filters([
-            //     //
-            // ])
+          
             ->recordUrl(false)
             
             ->actions([

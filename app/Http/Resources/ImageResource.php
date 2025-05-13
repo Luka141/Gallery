@@ -20,6 +20,7 @@ class ImageResource extends JsonResource
             'description' => $this->description,
             'file_path' => $this->file_path,
             'file_url' => $this->fullImgFileUrl(),
+            'content' => $this->content,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];

@@ -15,6 +15,11 @@ class Video extends Model
         'description',
         'file_path',
         'thumbnail_path',
+        'content',
+    ];
+
+    protected $casts = [
+        'content' => 'array',
     ];
 
     public function getVideoFullUrl()

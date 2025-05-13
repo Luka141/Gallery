@@ -15,6 +15,7 @@ class GalleryController extends Controller
         $images = Image::orderBy('created_at', 'desc')->get();
         $videos = Video::orderBy('created_at', 'desc')->get();
         
+        
         return view('gallery.index', compact('images', 'videos'));
     }
 }

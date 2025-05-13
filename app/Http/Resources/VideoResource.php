@@ -22,6 +22,7 @@ class VideoResource extends JsonResource
             'file_path' => $this->file_path,
             'thumbnail_url' => $this->getThumbnailFullUrl(),
             'thumbnail_path' => $this->thumbnail_path,
+            'content' => $this->content,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];
