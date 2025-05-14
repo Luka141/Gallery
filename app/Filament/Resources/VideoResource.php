@@ -17,6 +17,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -106,7 +107,10 @@ class VideoResource extends Resource
                 ->dateTime('y-m-d')
                 ->sortable(),
 
-                
+                IconColumn::make('content')
+                    ->label('More information')
+                    ->boolean()
+                    ->getStateUsing(fn ($record): bool => !empty($record->content)),
                 
             ])
           
