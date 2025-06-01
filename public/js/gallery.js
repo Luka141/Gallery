@@ -1,7 +1,5 @@
-// Gallery JavaScript Functionality
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize gallery
     initializeGallery();
     setupFilters();
     setupLightbox();
@@ -12,13 +10,11 @@ function initializeGallery() {
     const galleryItems = document.querySelectorAll('.gallery-item');
     const sizes = ['size-1x1', 'size-2x1', 'size-1x2', 'size-2x2'];
     
-    // Assign random sizes to gallery items
     galleryItems.forEach((item, index) => {
         let sizeClass;
         
-        // Strategic size assignment
         if (index === 0 || index === 5) {
-            sizeClass = 'size-2x2'; // Make some items larger
+            sizeClass = 'size-2x2'; 
         } else if (index % 4 === 0) {
             sizeClass = 'size-2x1';
         } else if (index % 6 === 0) {
@@ -37,15 +33,12 @@ function setupFilters() {
     
     filterBtns.forEach(btn => {
         btn.addEventListener('click', function() {
-            // Remove active class from all buttons
             filterBtns.forEach(b => b.classList.remove('active'));
             
-            // Add active class to clicked button
             this.classList.add('active');
             
             const filter = this.getAttribute('data-filter');
             
-            // Filter items with animation
             filterItems(galleryItems, filter);
         });
     });
@@ -56,20 +49,17 @@ function filterItems(items, filter) {
         const itemType = item.getAttribute('data-type');
         
         if (filter === 'all' || itemType === filter) {
-            // Show item with delay for stagger effect
             setTimeout(() => {
                 item.classList.remove('hidden');
                 item.style.animation = `fadeInUp 0.6s ease-out ${index * 0.1}s both`;
             }, index * 50);
         } else {
-            // Hide item immediately
             item.classList.add('hidden');
         }
     });
 }
 
 function setupLightbox() {
-    // Configure lightbox if available
     if (typeof lightbox !== 'undefined') {
         lightbox.option({
             'resizeDuration': 200,
@@ -92,7 +82,6 @@ function setupVideoPlayers() {
             if (videoUrl) {
                 openVideoModal(videoUrl);
             } else {
-                // Fallback for demo
                 console.log('Video player would open here');
                 alert('Video functionality - URL: ' + (videoUrl || 'demo video'));
             }
@@ -101,7 +90,6 @@ function setupVideoPlayers() {
 }
 
 function openVideoModal(videoUrl) {
-    // Create video modal
     const modal = document.createElement('div');
     modal.className = 'video-modal';
     modal.innerHTML = `
@@ -114,7 +102,6 @@ function openVideoModal(videoUrl) {
         </div>
     `;
     
-    // Add modal styles
     modal.style.cssText = `
         position: fixed;
         top: 0;
@@ -152,7 +139,6 @@ function openVideoModal(videoUrl) {
     
     document.body.appendChild(modal);
     
-    // Close modal functionality
     const closeModal = () => {
         document.body.removeChild(modal);
     };
@@ -164,20 +150,37 @@ function openVideoModal(videoUrl) {
         }
     });
     
-    // Close on escape key
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             closeModal();
         }
     });
 }
+const filterButtons = document.querySelectorAll('.filter-btn');
+const randomSections = document.querySelectorAll('.random-section');
 
-// Utility function for responsive grid
+filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const filter = button.dataset.filter;
+        
+        randomSections.forEach(section => {
+            if (filter === 'all') {
+                section.style.display = 'block';
+            } else if (filter === 'image' && section.querySelector('.random-images')) {
+                section.style.display = 'block';
+            } else if (filter === 'video' && section.querySelector('.random-videos')) {
+                section.style.display = 'block';
+            } else {
+                section.style.display = 'none';
+            }
+        });
+    });
+});
+
 function handleResize() {
     const galleryGrid = document.querySelector('.gallery-grid');
     const containerWidth = galleryGrid.offsetWidth;
     
-    // Adjust grid based on container width
     if (containerWidth < 480) {
         galleryGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(100px, 1fr))';
     } else if (containerWidth < 768) {
@@ -187,7 +190,6 @@ function handleResize() {
     }
 }
 
-// Add resize listener
 window.addEventListener('resize', debounce(handleResize, 300));
 
 // Debounce utility function
@@ -203,7 +205,6 @@ function debounce(func, wait) {
     };
 }
 
-// Lazy loading for images
 function setupLazyLoading() {
     const images = document.querySelectorAll('.gallery-item img[data-src]');
     
@@ -221,7 +222,6 @@ function setupLazyLoading() {
     images.forEach(img => imageObserver.observe(img));
 }
 
-// Initialize lazy loading if supported
 if ('IntersectionObserver' in window) {
     setupLazyLoading();
 }

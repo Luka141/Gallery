@@ -24,9 +24,15 @@ use App\Http\Controllers\GalleryMediaController;
     Route::get('/gallery/{id}', [GalleryImageController::class, 'show'])->name('gallery.show');
 
     Route::get('/video', [GalleryVideoController::class, 'index']);
-    Route::get('/video/{id}', [GalleryVideoController::class, 'show'])->name('video.show');;
+    Route::get('/video/{id}', [GalleryVideoController::class, 'show'])->name('video.show');
 
 
+    
+    Route::get('/gallery/image/{id}', [GalleryImageController::class, 'show'])->name('gallery.image.show');
+    Route::get('/gallery/video/{id}', [GalleryVideoController::class, 'show'])->name('gallery.video.show');
+    
+    Route::get('video/{id}', [GalleryController::class, 'showVideo'])->name('video.show');
+    Route::get('/gallery', [GalleryImageController::class, 'index'])->name('gallery.index');
 
 
 
