@@ -26,6 +26,7 @@
                         @if(!empty($image->description))
                             <p class="overlay-description">{{ Str::limit($image->description, 100) }}</p>
                         @endif
+                        <div>
                     </div>
                 </div>
             </a>
